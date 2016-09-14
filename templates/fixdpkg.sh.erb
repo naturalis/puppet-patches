@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# script for restoring apt-get updates after osprober lockup
+#
+
+# kill os prober processes
+kill -9 $(ps aux | grep -e os-probe | awk '{ print $2 }')
+kill -9 $(ps aux | grep -e grub-mkconfg | awk '{ print $2 }')
+kill -9 $(ps aux | grep -e btrfs | awk '{ print $2 }')
+
+# kill unattended-updates
+kill -9 $(ps aux | grep -e unattended | awk '{ print $2 }')
+
+# kill postinst
+kill -9 $(ps aux | grep -e postinst | awk '{ print $2 }')
+
+# kill dpkg
+killall -9 /usr/bin/dpkg
+
+# settle down a bit
+sleep 10
+
+# try to reconfigure and run unattended-upgrade
+dpkg --configure -a
+unattended-upgrade -d
