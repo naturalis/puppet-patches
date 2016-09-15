@@ -6,12 +6,13 @@
 # Author: Hugo van Duijn
 #
 class patches::os_level::fix_dpkg(
+  $ensure           = present,
 ){
 
   file { '/opt/fixdpkg.sh':
-    ensure    => 'present',
     content   =>  template('patches/fixdpkg.sh.erb'),
     mode      => '0700',
+    ensure    => $ensure
   }
 
   exec { "fix dpkg when stuck in os_prober":
