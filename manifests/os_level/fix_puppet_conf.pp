@@ -1,6 +1,6 @@
 #
 # Patch puppet.conf with additional rules for splay and splaylimit
-# this will add a random delay up to 5 minutes to a puppetrun 
+# this will add a random delay up to the runtime of puppet 
 # and should help reducing the load to foreman due to not having 
 # to process large amount of hosts at once.
 #
