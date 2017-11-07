@@ -15,14 +15,6 @@ class patches::os_level::fix_puppet_conf(
     path               => $config_path,
     after              => '\[agent\]',
     line               => 'splay           = true',
-  }
-
-  file_line { 'add splaylimit':
-    ensure             => present,
-    path               => $config_path,
-    after              => '\[agent\]',
-    line               => 'splaylimit      = 5m',
-    require            => File_line['add splay'],
     notify             => Exec['restart puppet'],
   }
 
